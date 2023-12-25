@@ -123,7 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             children: [
                               STextField(
                                   title: 'Full Name',
-                                  hint: 'easyfix',
+                                  hint: 'opus',
                                   obscureField: false,
                                   thisController: fullNameController),
                               STextField(

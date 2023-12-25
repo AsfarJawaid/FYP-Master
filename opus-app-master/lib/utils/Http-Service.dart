@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
 class ApiHandler {
-  static String baseUrl = "http://10.0.2.2:5000";
+  static String baseUrl = "http://192.168.5.104:5000";
 
   static Dio dio = new Dio();
 

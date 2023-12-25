@@ -156,6 +156,7 @@ class _BookingListState extends State<BookingList> {
                                             },
                                           )),
                                         ),
+                                        widget.bookings[index]['status_val'] == 'confirm' ? Container():
                                         Padding(
                                           padding: const EdgeInsets.all(3.0),
                                           child: Container(
@@ -166,7 +167,12 @@ class _BookingListState extends State<BookingList> {
                                                   color: SColors
                                                       .PrimaryColorPurple),
                                             ),
-                                            onPressed: () async {},
+                                            onPressed: () async {
+                                              // /booking/book/client/set-confirm/:id
+                                              // print('/booking/book/client/set-confirm/${widget.bookings[index]["_id"]}');
+                                             var res =  await ApiHandler ().makePutRequest('/booking/book/client/set-confirm/${widget.bookings[index]["_id"]}',{});
+                                              print(res);
+                                            },
                                           )),
                                         )
                                       ],
