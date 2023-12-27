@@ -46,7 +46,7 @@ class _StartScreenState extends State<StartScreen> {
                       EdgeInsets.all(ScreenSizeConfig.safeBlockHorizontal * 25),
                   height: ScreenSizeConfig.safeBlockVertical * 60,
                   width: ScreenSizeConfig.safeBlockHorizontal * 90,
-                  child: Image.asset('assets/images/opus_logo.png'),
+                  child: Image.asset('assets/images/easyfix.png'),
                 ),
                 //signup button
                 Container(
