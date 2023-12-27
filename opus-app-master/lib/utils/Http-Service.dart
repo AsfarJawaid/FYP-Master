@@ -1,8 +1,13 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
 class ApiHandler {
-  static String baseUrl = "http://192.168.5.104:5000";
+  static String baseUrl = "https://asfarjawaid.azurewebsites.net";
+  static ApiHandler get getInstance {
+    return ApiHandler();
+  }
 
   static Dio dio = new Dio();
 
@@ -18,5 +23,13 @@ class ApiHandler {
   Future makePutRequest(@required String getRoute, @required data) async {
     var response = await dio.put(baseUrl + getRoute, data: data);
     return response;
+  }
+
+  Future<dynamic> deleteWorkerBooking({@required String getRoute}) async {
+    return await dio.delete(baseUrl + getRoute).then((value) {
+      return value;
+    }).catchError((e) {
+      log(e.toString());
+    });
   }
 }

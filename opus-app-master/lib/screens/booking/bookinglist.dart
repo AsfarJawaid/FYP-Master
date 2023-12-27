@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:opusapp/screens/constants/SColors.dart';
 import 'package:opusapp/screens/preference_shared/screenSizeConfig.dart';
@@ -16,9 +18,11 @@ class BookingList extends StatefulWidget {
 }
 
 class _BookingListState extends State<BookingList> {
+  List bookings;
   @override
   void initState() {
     // TODO: implement initState
+    bookings = widget.bookings;
     super.initState();
   }
 
@@ -68,7 +72,7 @@ class _BookingListState extends State<BookingList> {
                     width: ScreenSizeConfig.screenWidth * 0.88,
                     height: ScreenSizeConfig.screenHeight * 0.72,
                     child: ListView.builder(
-                      itemCount: widget.bookings.length,
+                      itemCount: bookings.length,
                       itemBuilder: (context, index) {
                         return Container(
                             width: ScreenSizeConfig.screenWidth * 0.88,
@@ -156,21 +160,55 @@ class _BookingListState extends State<BookingList> {
                                             },
                                           )),
                                         ),
-                                        widget.bookings[index]['status_val'] == 'confirm' ? Container():
+                                        bookings[index]['status_val'] ==
+                                                'confirm'
+                                            ? Container()
+                                            : Padding(
+                                                padding:
+                                                    const EdgeInsets.all(3.0),
+                                                child: Container(
+                                                    child: TextButton(
+                                                  child: Text(
+                                                    "Confirm",
+                                                    style: TextStyle(
+                                                        color: SColors
+                                                            .PrimaryColorPurple),
+                                                  ),
+                                                  onPressed: () async {
+                                                    log(bookings[index]
+                                                        ['status_val']);
+                                                    setState(() {
+                                                      bookings[index]
+                                                              ['status_val'] =
+                                                          'confirm';
+                                                    });
+                                                    var res = await ApiHandler()
+                                                        .makePutRequest(
+                                                            '/booking/book/client/set-confirm/${widget.bookings[index]["_id"]}',
+                                                            {});
+                                                    print(res);
+                                                  },
+                                                )),
+                                              ),
                                         Padding(
                                           padding: const EdgeInsets.all(3.0),
                                           child: Container(
                                               child: TextButton(
                                             child: Text(
-                                              "Confirm Booking",
+                                              "Cancel",
                                               style: TextStyle(
-                                                  color: SColors
-                                                      .PrimaryColorPurple),
+                                                  color: Colors.redAccent),
                                             ),
                                             onPressed: () async {
-                                              // /booking/book/client/set-confirm/:id
-                                              // print('/booking/book/client/set-confirm/${widget.bookings[index]["_id"]}');
-                                             var res =  await ApiHandler ().makePutRequest('/booking/book/client/set-confirm/${widget.bookings[index]["_id"]}',{});
+                                              var id = bookings[index]['_id'];
+                                              setState(() {
+                                                bookings.removeAt(index);
+                                              });
+                                              var res = await ApiHandler
+                                                  .getInstance
+                                                  .deleteWorkerBooking(
+                                                      getRoute:
+                                                          "/booking/book/worker/$id");
                                               print(res);
                                             },
                                           )),

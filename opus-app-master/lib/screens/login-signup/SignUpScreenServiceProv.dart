@@ -126,7 +126,7 @@ class _ServiceProviderSignUpScreenState
                             children: [
                               STextField(
                                   title: 'Full Name',
-                                  hint: 'Shahbaz Siddiqui',
+                                  hint: 'Asfar Jawaid',
                                   obscureField: false,
                                   thisController: fullNameController),
                               STextField(

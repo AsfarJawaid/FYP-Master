@@ -25,7 +25,6 @@ app.use("/client", require("./routes/client"));
 app.use("/login", require("./routes/login"));
 app.use("/booking", require("./routes/booking"));
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });

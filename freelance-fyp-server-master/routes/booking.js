@@ -6,6 +6,7 @@ const Worker = require("../models/worker");
 const auth = require("../middleware/auth");
 const Feedback = require("../models/feedback");
 const Notifications = require("../models/notification");
+const { compareSync } = require("bcryptjs");
 
 const client = require("twilio")(
   "ACeb4286c376ef472f6111e70722e4ecaa",
@@ -215,7 +216,29 @@ router.get("/book/worker/:id", async (req, res) => {
     return res.status(500).json({ success: false, error: err.message });
   }
 });
+router.delete("/book/worker/:id", async (req, res) => {
+  try {
+    let deletedBooking = await Booking.findByIdAndDelete(req.params.id);
 
+    if (!deletedBooking) {
+      console.log('Hello');
+      return res.status(404).json({
+        success: false,
+        error: "Booking not found",
+      });
+    }
+    console.log('found And Deleted');
+    return res.json({ 
+      success: true,
+      deletedBooking,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: err.message,
+    });
+  }
+});
 router.get("/book/client/pending/:id", async (req, res) => {
   try {
     let book = await Booking.find({
